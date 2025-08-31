@@ -72,8 +72,8 @@ export default function MagnitudeSlider({
         flexDirection: "column",
         alignItems: "center",
         position: "absolute",
-        bottom: 106,
-        right: 26,
+        bottom: 80,
+        right: 30,
         zIndex: 500,
       }}
     >
