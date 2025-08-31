@@ -83,7 +83,7 @@ export default function MagnitudeSlider({
             display: "flex",
             flexDirection: "column",
             width: isMobile ? "1.5rem" : "2.5rem",
-            height: isMobile ? 300 : 500,
+            height: isMobile ? 200 : 500,
             bgcolor: "rgba(255,255,255,0.9)",
             p: 2,
             borderRadius: 2,
