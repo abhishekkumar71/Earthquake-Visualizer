@@ -9,38 +9,58 @@ import {
 } from "react-leaflet";
 import { useMediaQuery } from "@mui/material";
 import "leaflet/dist/leaflet.css";
+
+//  custom components
 import TimelineFilter from "../components/timelineFilter";
 import MagnitudeSlider from "../components/MagnitudeSlider";
 import MapToggle from "../components/MapToggle";
 import TimelineAnimation from "../components/timelineAnimation";
 import ErrorPage from "../components/ErrorPage";
+
 function App() {
+  // State to hold earthquake data from API
   const [earthquakes, setEarthQuakes] = useState([]);
+
+  // State for the current magnitude filter
   const [magnitude, setMagnitude] = useState(0);
+
+  // State for timeline filter ("all_day", "all_week", etc.)
   const [timeline, setTimeline] = useState("all_day");
-  const isMobile = useMediaQuery(theme.breakpoints.between("sm", "md"));
+
+  // State for map type (street or satellite)
   const [mapType, setMapType] = useState("street");
+
+  // State for timeline animation play/pause
   const [isPlaying, setIsPlaying] = useState(false);
+  const isMobile = useMediaQuery("(max-width:960px)");
+
+  // State for controlling slider visibility (on mobile it can be toggled)
   const [openSlider, setOpenSlider] = useState(!isMobile);
   const [error, setError] = useState(null);
+
+  // State to track the current index for timeline animation
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
     setOpenSlider(!isMobile);
   }, [isMobile]);
 
+  // Function to determine color of marker/slider thumb based on magnitude
   const getTrackColor = (val) => {
     if (val < 3) return "#61b30fff";
     else if (val < 6) return "orange";
     else return "red";
   };
 
+  // Function to determine marker radius based on magnitude
   const getRadius = (mag) => {
     return Math.max(mag * 2, 3);
   };
   const sortedQuakes = [...earthquakes].sort(
     (a, b) => a.properties.time - b.properties.time
   );
+
+  // Filter earthquakes based on magnitude and timeline animation index
   const filtered = isPlaying
     ? sortedQuakes
         .filter((eq) => eq.properties.mag >= magnitude)
@@ -59,7 +79,7 @@ function App() {
       }
     };
     fetchData();
-    const interval = setInterval(fetchData, 60000);
+    const interval = setInterval(fetchData, 60000); // refresh every minute
     return () => clearInterval(interval);
   }, [timeline]);
   if (error) {
@@ -69,8 +89,9 @@ function App() {
   }
   return (
     <div className="h-screen w-screen relative">
-      {/* Map */}
+      {/* Map container */}
       <MapContainer center={[20, 0]} zoom={2} className="h-full w-full">
+        {/* TileLayer for street or satellite view */}
         <TileLayer
           url={
             mapType === "street"
@@ -117,7 +138,10 @@ function App() {
           );
         })}
       </MapContainer>
+      {/* Timeline filter component */}
       <TimelineFilter timeline={timeline} setTimeline={setTimeline} />
+
+      {/* Timeline animation component */}
       <TimelineAnimation
         isPlaying={isPlaying}
         setIsPlaying={setIsPlaying}
@@ -125,11 +149,15 @@ function App() {
         currentIndex={currentIndex}
         setCurrentIndex={setCurrentIndex}
       />
+
+      {/* Map toggle (street/satellite) */}
       <MapToggle
         mapType={mapType}
         setMapType={setMapType}
         isMobile={isMobile}
       />
+
+      {/* Magnitude slider */}
       <MagnitudeSlider
         isMobile={isMobile}
         getTrackColor={getTrackColor}
