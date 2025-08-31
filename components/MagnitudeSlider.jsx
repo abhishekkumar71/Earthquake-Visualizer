@@ -120,7 +120,11 @@ export default function MagnitudeSlider({
         </Box>
       )}
       {/* Magnitude Slider - Bottom Right */}
-      {isMobile && (
+      {[
+        { label: "0-3", color: "green", val: 3 },
+        { label: "3-6", color: "orange", val: 6 },
+        { label: "6-9", color: "red", val: 9 },
+      ].map((btn) => (
         <MUITooltip title="Magnitude filter" arrow>
           <Fab
             size="small"
@@ -130,7 +134,7 @@ export default function MagnitudeSlider({
             <EqualizerIcon />
           </Fab>
         </MUITooltip>
-      )}
+      ))}
     </div>
   );
 }

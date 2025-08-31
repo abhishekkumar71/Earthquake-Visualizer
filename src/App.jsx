@@ -20,11 +20,11 @@ function App() {
   const [timeline, setTimeline] = useState("all_day");
   const [mapType, setMapType] = useState("street");
   const [isPlaying, setIsPlaying] = useState(false);
-  const isMobile = useMediaQuery("(max-width:600px)");
   const [openSlider, setOpenSlider] = useState(!isMobile);
   const [error, setError] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(0);
 
+  const isMobile = useMediaQuery(theme.breakpoints.between('sm', 'md'));
   useEffect(() => {
     setOpenSlider(!isMobile);
   }, [isMobile]);
