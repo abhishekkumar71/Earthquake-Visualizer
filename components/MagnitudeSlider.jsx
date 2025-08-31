@@ -18,7 +18,13 @@ export default function MagnitudeSlider({
     setOpenSlider(!isMobile);
   }, [isMobile]);
   const getThumbColor = (val) => getTrackColor(val);
+  const [windowHeight, setWindowHeight] = useState(window.innerHeight);
 
+  useEffect(() => {
+    const handleResize = () => setWindowHeight(window.innerHeight);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
   const marks = [
     {
       value: 0,
@@ -83,7 +89,8 @@ export default function MagnitudeSlider({
             display: "flex",
             flexDirection: "column",
             width: isMobile ? "1.5rem" : "2.5rem",
-            height: isMobile ? 200 : 500,
+            height: isMobile ? windowHeight * 0.4 : windowHeight * 0.6,
+            maxHeight: "80vh",
             bgcolor: "rgba(255,255,255,0.9)",
             p: 2,
             borderRadius: 2,
