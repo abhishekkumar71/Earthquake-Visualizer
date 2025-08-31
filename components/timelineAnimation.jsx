@@ -4,8 +4,7 @@ import Fab from "@mui/material/Fab";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import PauseIcon from "@mui/icons-material/Pause";
 
-export default function TimelineAnimation({ isPlaying,setIsPlaying,earthquakes }) {
-  const [currentIndex, setCurrentIndex] = useState(0);
+export default function TimelineAnimation({ isPlaying,setIsPlaying,earthquakes,currentIndex,setCurrentIndex }) {
   const handlePlay = () => {
     if (isPlaying) {
       setIsPlaying(false);

@@ -23,7 +23,7 @@ function App() {
   const isMobile = useMediaQuery("(max-width:600px)");
   const [openSlider, setOpenSlider] = useState(!isMobile);
   const [error, setError] = useState(null);
-
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
     setOpenSlider(!isMobile);
@@ -46,7 +46,7 @@ function App() {
         .filter((eq) => eq.properties.mag >= magnitude)
         .slice(0, currentIndex)
     : sortedQuakes.filter((eq) => eq.properties.mag >= magnitude);
-     
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -122,6 +122,8 @@ function App() {
         isPlaying={isPlaying}
         setIsPlaying={setIsPlaying}
         earthquakes={earthquakes}
+        currentIndex={currentIndex}
+        setCurrentIndex={setCurrentIndex}
       />
       <MapToggle
         mapType={mapType}
