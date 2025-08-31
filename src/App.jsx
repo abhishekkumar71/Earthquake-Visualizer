@@ -18,13 +18,13 @@ function App() {
   const [earthquakes, setEarthQuakes] = useState([]);
   const [magnitude, setMagnitude] = useState(0);
   const [timeline, setTimeline] = useState("all_day");
+  const isMobile = useMediaQuery(theme.breakpoints.between("sm", "md"));
   const [mapType, setMapType] = useState("street");
   const [isPlaying, setIsPlaying] = useState(false);
   const [openSlider, setOpenSlider] = useState(!isMobile);
   const [error, setError] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const isMobile = useMediaQuery(theme.breakpoints.between('sm', 'md'));
   useEffect(() => {
     setOpenSlider(!isMobile);
   }, [isMobile]);
